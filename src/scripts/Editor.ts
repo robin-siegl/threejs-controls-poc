@@ -33,23 +33,34 @@ export class Editor {
   }
 
   private transformControlsFeature(): void {
+    const translateElem = document.createElement('button');
+    translateElem.title = 'Press Key "T" on your keyboard for easy switching.';
+    translateElem.innerHTML = `
+      <span id='translate-key'>T</span>
+      <span>Translate</span>
+    `;
+    translateElem.addEventListener('click', () => this.SelectManager.setMode('translate'))
+    const rotateElem = document.createElement('button');
+    rotateElem.title = 'Press Key "R" on your keyboard for easy switching.';
+    rotateElem.innerHTML = `
+      <span id='rotate-key'>R</span>
+      <span>Rotate</span>
+    `;
+    rotateElem.addEventListener('click', () => this.SelectManager.setMode('rotate'))
+    const scaleElem = document.createElement('button');
+    scaleElem.title = 'Press Key "S" on your keyboard for easy switching.';
+    scaleElem.innerHTML = `
+      <span id='scale-key'>S</span>
+      <span>Scale</span>
+    `;
+    scaleElem.addEventListener('click', () => this.SelectManager.setMode('scale'))
+
     const containerElem = document.createElement('div');
     containerElem.id = 'mode-feat';
     containerElem.className = this.SelectManager.Mode;
-    containerElem.innerHTML = `
-      <div>
-        <div id='translate-key'>T</div>
-        <span>Translate</span>
-      </div>
-      <div>
-        <div id='rotate-key'>R</div>
-        <span>Rotate</span>
-      </div>
-      <div>
-        <div id='scale-key'>S</div>
-        <span>Scale</span>
-      </div>
-    `;
+    containerElem.appendChild(translateElem);
+    containerElem.appendChild(rotateElem);
+    containerElem.appendChild(scaleElem);
 
     App.Container.appendChild(containerElem);
   }

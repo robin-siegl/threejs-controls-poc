@@ -20,24 +20,32 @@
   color: #ffffff;
 }
 
-#mode-feat > div {
+#mode-feat > button {
   display: flex;
   gap: 0.5rem;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  align-items: center;
 }
-#mode-feat > div > div {
+
+#mode-feat > button > span:first-child {
   border-radius: 2px;
-  padding: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
   font-weight: 600;
   background-color: rgba(40, 40, 87, 0.9);
   transition: background-color .2s ease-in-out;
 }
-#mode-feat.translate > div > #translate-key {
+#mode-feat.translate > button > #translate-key {
   background-color: rgba(8, 153, 64, 0.9);
 }
-#mode-feat.rotate > div > #rotate-key {
+#mode-feat.rotate > button > #rotate-key {
   background-color: rgba(8, 153, 64, 0.9);
 }
-#mode-feat.scale > div > #scale-key {
+#mode-feat.scale > button > #scale-key {
   background-color: rgba(8, 153, 64, 0.9);
 }
 
