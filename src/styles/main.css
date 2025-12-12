@@ -1,0 +1,59 @@
+#app {
+  position: relative;
+  width: 100svw;
+  height: 100svh;
+}
+
+#mode-feat {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 100;
+  background-color: rgba(40, 40, 60, 0.6);
+  border: 1px solid rgb(40, 40, 60);
+  margin: 0;
+  padding: 0.25rem 1rem 0.25rem 0.25rem;
+  display: flex;
+  gap: 2rem;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+}
+
+#mode-feat > div {
+  display: flex;
+  gap: 0.5rem;
+}
+#mode-feat > div > div {
+  border-radius: 2px;
+  padding: 0 0.5rem;
+  font-weight: 600;
+  background-color: rgba(40, 40, 87, 0.9);
+  transition: background-color .2s ease-in-out;
+}
+#mode-feat.translate > div > #translate-key {
+  background-color: rgba(8, 153, 64, 0.9);
+}
+#mode-feat.rotate > div > #rotate-key {
+  background-color: rgba(8, 153, 64, 0.9);
+}
+#mode-feat.scale > div > #scale-key {
+  background-color: rgba(8, 153, 64, 0.9);
+}
+
+#snap-feat {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 100;
+  background-color: rgba(40, 40, 60, 0.6);
+  border: 1px solid rgb(40, 40, 60);
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  cursor: pointer;
+}
