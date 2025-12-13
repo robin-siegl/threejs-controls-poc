@@ -33,7 +33,7 @@ export class ThreeMgr {
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setClearColor(0x0b0f14, 1);
+    this.renderer.setClearColor(0xffffff, 1);
     App.Container.appendChild(this.renderer.domElement);
 
     // Directional Light Setup

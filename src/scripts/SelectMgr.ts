@@ -23,6 +23,8 @@ export class SelectMgr {
   /** Current Transform Controls Mode */
   private mode: TransformMode = 'translate';
 
+  private onDraggingChangedHandler = this.onDraggingChanged.bind(this);
+  private onObjectChangeHandler = this.onObjectChange.bind(this);
   private onKeyDownHandler = this.onKeyDown.bind(this);
   private onPointerDownHandler = this.onPointerDown.bind(this);
 
@@ -35,28 +37,31 @@ export class SelectMgr {
     this.editor.ThreeManager.Scene.add(this.controls.getHelper());
     this.setMode('translate');
 
-    this.controls.addEventListener('dragging-changed', (e: any) => {
-      this.editor.ThreeManager.Orbit.enabled = !e.value;
-    });
-    this.controls.addEventListener('objectChange', () => {
-      const obj = this.controls.object;
-      if (!obj) {
-        return;
-      }
-
-      // lock to ground plane
-      obj.position.y = 0;
-
-      // lock scale to X/Z only
-      obj.scale.y = 1;
-    });
-
-    window.addEventListener('keydown', this.onKeyDownHandler);
+    this.controls.addEventListener('dragging-changed', this.onDraggingChangedHandler);
+    this.controls.addEventListener('objectChange', this.onObjectChangeHandler);
     this.editor.ThreeManager.Renderer.domElement.addEventListener('pointerdown', this.onPointerDownHandler);
+    window.addEventListener('keydown', this.onKeyDownHandler);
+  }
+
+  private onObjectChange() {
+    const obj = this.controls.object;
+    if (!obj) {
+      return;
+    }
+
+    // lock to ground plane
+    obj.position.y = 0;
+
+    // lock scale to X/Z only
+    obj.scale.y = 1;
+  }
+
+  private onDraggingChanged(ev: any) {
+    this.editor.ThreeManager.Orbit.enabled = !ev.value;
   }
 
   private onPointerDown(ev: PointerEvent) {
-    // don’t select while dragging gizmo
+    // don't select while dragging gizmo
     if ((this.controls as any).dragging) {
       return;
     }
@@ -69,7 +74,7 @@ export class SelectMgr {
     this.raycaster.setFromCamera(this.ndc, this.editor.ThreeManager.Camera);
 
     // Intersect all editor objects by using their meshes
-    const meshes = this.editor.objects.map(o => o.Mesh);
+    const meshes = this.editor.objects.map((o) => o.Mesh);
     const hits = this.raycaster.intersectObjects(meshes, false);
 
     if (hits.length === 0) {
@@ -88,14 +93,14 @@ export class SelectMgr {
     this.select(obj);
   }
 
-  private onKeyDown(e: KeyboardEvent) {
+  private onKeyDown(ev: KeyboardEvent) {
     // don’t steal keys while typing in inputs
     const el = document.activeElement;
     if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA')) {
       return;
     }
 
-    switch (e.key.toLowerCase()) {
+    switch (ev.key.toLowerCase()) {
       case 't':
         this.setMode('translate');
         break;
@@ -169,10 +174,9 @@ export class SelectMgr {
   }
 
   public cleanup() {
+    this.controls.removeEventListener('dragging-changed', this.onDraggingChangedHandler);
+    this.controls.removeEventListener('objectChange', this.onObjectChangeHandler);
+    this.editor.ThreeManager.Renderer.domElement.removeEventListener('pointerdown', this.onPointerDownHandler);
     window.removeEventListener("keydown", this.onKeyDownHandler);
-    this.editor.ThreeManager.Renderer.domElement.removeEventListener(
-      "pointerdown",
-      this.onPointerDownHandler
-    );
   }
 }
