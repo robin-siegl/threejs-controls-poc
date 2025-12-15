@@ -35,12 +35,20 @@ export class SelectMgr {
     // Transform Controls Setup
     this.controls = new TransformControls(this.editor.ThreeManager.Camera, this.editor.ThreeManager.Renderer.domElement);
     this.editor.ThreeManager.Scene.add(this.controls.getHelper());
+    this.setTransformControlsColors();
     this.setMode('translate');
 
     this.controls.addEventListener('dragging-changed', this.onDraggingChangedHandler);
     this.controls.addEventListener('objectChange', this.onObjectChangeHandler);
     this.editor.ThreeManager.Renderer.domElement.addEventListener('pointerdown', this.onPointerDownHandler);
     window.addEventListener('keydown', this.onKeyDownHandler);
+  }
+
+  /**
+   * Set Custom Colors for Transform Controls Gizmo
+   */
+  private setTransformControlsColors() {
+    this.controls.setColors('hotpink', 'hotpink', 'hotpink', 'purple');
   }
 
   private onObjectChange() {
